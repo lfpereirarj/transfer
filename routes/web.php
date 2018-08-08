@@ -26,3 +26,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('transfers', 'Admin\TransferController');
     Route::resource('schedules', 'Admin\ScheduleController');
 });
+
+Route::get('paypal/express-checkout', 'PaypalController@expressCheckout')->name('paypal.express-checkout');
+Route::get('paypal/express-checkout-success', 'PaypalController@expressCheckoutSuccess');
+Route::post('paypal/notify', 'PaypalController@notify');

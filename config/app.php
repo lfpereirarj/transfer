@@ -161,6 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class,
 
     ],
 

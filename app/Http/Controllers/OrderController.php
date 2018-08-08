@@ -34,7 +34,11 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $response = array(
+            'status' => 'success',
+            'msg' => 'Setting created successfully',
+        );
+        return \Response::json($response);
     }
 
     /**

@@ -109,6 +109,8 @@
     </div>
     <script src="{{ asset('js/vendors.min.js') }}"></script>
     <script src="{{ asset('js/main.min.js') }}"></script>
+
+    @yield('script')
 </body>
 
 </html>
