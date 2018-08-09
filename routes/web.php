@@ -19,6 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('orders/success', 'OrderController@success');
+
 Route::resource('transfers', 'TransferController');
 Route::resource('orders', 'OrderController');
 
@@ -27,6 +29,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('schedules', 'Admin\ScheduleController');
 });
 
-Route::get('paypal/express-checkout', 'PaypalController@expressCheckout')->name('paypal.express-checkout');
-Route::get('paypal/express-checkout-success', 'PaypalController@expressCheckoutSuccess');
-Route::post('paypal/notify', 'PaypalController@notify');
+
+

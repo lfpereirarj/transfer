@@ -85,4 +85,9 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function success() 
+    {
+        return view('orders.success');
+    }
 }

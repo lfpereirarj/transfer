@@ -50,7 +50,7 @@
                                     <div class="collapse navbar-collapse" id="navbarNav">
                                         <ul class="navbar-nav">
                                             <li class="nav-item active">
-                                                <a class="nav-link" href="#">Home
+                                                <a class="nav-link" href="http://www.transferilhagrande.com.br/">Home
                                                     <span class="sr-only">(current)</span>
                                                 </a>
                                             </li>
@@ -108,6 +108,7 @@
         </main>
     </div>
     <script src="{{ asset('js/vendors.min.js') }}"></script>
+    <script src="{{ asset('js/moment.js') }}"></script>
     <script src="{{ asset('js/main.min.js') }}"></script>
 
     @yield('script')

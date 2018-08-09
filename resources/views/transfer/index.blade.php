@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <select class="custom-select" name="hour">
+                            <select class="custom-select" name="hour" id="hour">
                                 <option selected="">Horário do transfer</option>
                                 @foreach (json_decode($transfer->hour, true) as $hour)
                                     <option value="{{ $hour }}">{{ $hour }}</option>
@@ -54,7 +54,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
-                            <select class="custom-select" name="departure">
+                            <select class="custom-select" name="departure" id="departure">
                                 <option selected="">Local de embarque</option>
                                 @foreach (json_decode($transfer->departure, true) as $departure)
                                     <option value="{{ $departure }}">{{ $departure }}</option>
@@ -63,7 +63,7 @@
                         </div>
                         @if($transfer->destination)
                         <div class="col">
-                            <select class="custom-select" name="destination">
+                            <select class="custom-select" name="destination" id="destination">
                                 <option selected="">Destino</option>
                                 @foreach (json_decode($transfer->destination, true) as $destination)
                                     <option value="{{ $destination }}">{{ $destination }}</option>
@@ -80,33 +80,32 @@
                 <div class="form-group">
                     <select class="custom-select" name="price_combo" id="package">
                         <option selected="" value="1">Pacote de Viagem</option>
+                        @if($transfer->price_combo)
                         <option value="{{ $transfer->price_combo }}">Ida e Volta</option>
+                        @endif
                         <option value="{{ $transfer->price }}">Ida </option>
                     </select>
                 </div>
                 <input type="hidden" name="price_total" id="price_total">
                 <button class="btn btn-primary previous">Anterior</button>
-                <button class="btn btn-primary next">Próximo</button>
+                <button id="update" class="btn btn-primary next">Próximo</button>
             </fieldset>
             <fieldset class="fieldset">
                 <h2>Pagamento</h2>
+
+                <h3>Resumo do Pedido</h3>
+
                 
 
-                <label>
-                    <input type="radio" name="payment-option" value="paypal" checked>
-                    <img src="/demo/checkout/static/img/paypal-mark.jpg" alt="Pay with Paypal">
-                </label>
+                <div id="resumo"></div>
+                
+                                            
 
-                <label>
-                    <input type="radio" name="payment-option" value="card">
-                    <img src="/demo/checkout/static/img/card-mark.png" alt="Accepting Visa, Mastercard, Discover and American Express">
-                </label>
-
+                
                 <div id="paypal-button-container"></div>
-                <div id="card-button-container" class="hidden"><button>Continue</button></div>
-
+                <br>
                 <button class="btn btn-primary previous">Anterior</button>
-                <button id="submit" type="submit" class="btn btn-primary">Finalizar</button>
+                
             </fieldset>
         </div>
     </form>
@@ -124,6 +123,13 @@
             var name = $('#name').val();
             var email = $('#email').val();
             var _token = $('input[name="_token"]').val();
+            var destination = $('input[name="destination"]').val();
+            var departure = $('input[name="departure"]').val();
+            var hour = $('input[name="hour"]').val();
+            var quantity = $('input[name="quantity"]').val();
+            var date = $('input[name="date"]').val();
+            var priceTotal = $('#price_total').val();
+            var price = $('#package').val();
             $.ajax({
                 type: "POST",
                 url: $('#step-form').attr('action'),
@@ -133,9 +139,28 @@
                 }
             });
         });
+
+        $('#paypal').on('click', function (e) {
+            //e.preventDefault();
+            $('#paypal-button-container').trigger('click');
+        });
+
+        $('#update').on('click', function(){
+            var priceTotal = $('#price_total').val();
+            var price = $('#package').val();
+            var destination = $('#destination').val();
+            var departure = $('#departure').val();
+            var hour = $('#hour').val();
+            var quantity = $('input[name="quantity"]').val();
+            var package = $('#package option:selected').text();
+            var date = $('input[name="date"]').val();
+
+            var html = '<ul class="list-unstyled"><li>Transfer: {{ $transfer->name }}</li><li>Pacote: <strong>'+ package +'</strong></li><li>Data: <strong>'+ date +'</strong></li><li>Horário: <strong>'+ hour +'</strong></li><li>Quantidade: <strong>'+ quantity +'</strong></li><li>Preço Total: <strong>R$'+ priceTotal +'</strong></li></ul>';
+                $('#resumo').html(html);
+        })
     });
 
-    function getElements(el) {
+    {{--  function getElements(el) {
         return Array.prototype.slice.call(document.querySelectorAll(el));
     }
 
@@ -155,22 +180,23 @@
             // If PayPal is selected, show the PayPal button
 
             if (event.target.value === 'paypal') {
-                hideElement('#card-button-container');
-                showElement('#paypal-button-container');
+                hideElement('#submit');
+                showElement('#paypal');
             }
 
             // If Card is selected, show the standard continue button
 
             if (event.target.value === 'card') {
-                showElement('#card-button-container');
-                hideElement('#paypal-button-container');
+                showElement('#submit');
+                hideElement('#paypal');
             }
         });
     });
 
     // Hide Non-PayPal button by default
 
-    hideElement('#card-button-container');
+    hideElement('#submit');
+    //hideElement('#paypal-button-container');  --}}
 
     // Render the PayPal button
 
@@ -185,7 +211,7 @@
 
         style: {
             label: 'paypal',
-            size:  'medium',    // small | medium | large | responsive
+            size:  'small',    // small | medium | large | responsive
             shape: 'rect',     // pill | rect
             color: 'blue',     // gold | blue | silver | black
             tagline: false    
@@ -207,7 +233,7 @@
 
         onAuthorize: function(data, actions) {
             return actions.payment.execute().then(function() {
-                window.alert('Payment Complete!');
+                window.location = '/orders/success';
             });
         }
 
