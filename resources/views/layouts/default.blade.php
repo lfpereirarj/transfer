@@ -11,6 +11,10 @@
     <title>{{ config('app.name', 'Transfer Ilha Grande') }}</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/vendors.min.css') }}">
+    <!-- <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" /> -->
+    <link href="{{ asset('css/gsdk-bootstrap-wizard.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/demo.css') }}" rel="stylesheet" />
+
     <link rel="stylesheet" href="{{ asset('css/main.min.css') }}">
 </head>
 
@@ -107,9 +111,9 @@
             @yield('content')            
         </main>
     </div>
-    <script src="{{ asset('js/vendors.min.js') }}"></script>
-    <script src="{{ asset('js/main.min.js') }}"></script>
-
+    <script src="{{ asset('js/vendors.min.js') }}"></script> 
+    <script src="{{ asset('js/moment.js') }}"></script> 
+    <script src="{{ asset('js/main.min.js') }}"></script> 
     @yield('script')
 </body>
 
