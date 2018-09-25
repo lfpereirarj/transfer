@@ -16,7 +16,7 @@ class CreateTransfersTable extends Migration
         Schema::create('transfers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('type');
+            $table->string('type')->nullable();
             $table->string('route');
             $table->float('price', 8, 2);
             $table->timestamps();

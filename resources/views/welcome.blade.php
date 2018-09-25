@@ -1,95 +1,134 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.default')
 
-        <title>Laravel</title>
+@section('content')
+<div class="container">
+        <div class="row">
+        <div class="col-sm-8 offset-2">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+            <!--      Wizard container        -->
+            <div class="wizard-container">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+                <div class="card wizard-card" data-color="orange" id="wizardProfile">
+                    <form action="" method="">
+                    	<div class="wizard-header">
+                        	<h3>
+                               <b>AGENDE</b> O SEU TRANSFER 
+                               <br>
+                               <br>
+                        	</h3>
+                    	</div>
 
-            .full-height {
-                height: 100vh;
-            }
+						<div class="wizard-navigation">
+							<ul>
+	                            <li><a href="#about" data-toggle="tab">Dados Pessoais</a></li>
+	                            <li><a href="#account" data-toggle="tab">Transfer</a></li>
+                                <li><a href="#address" data-toggle="tab">Confirmação</a></li>
+                                <li><a href="#address" data-toggle="tab">Pagamento</a></li>
+	                        </ul>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+						</div>
 
-            .position-ref {
-                position: relative;
-            }
+                        <div class="tab-content">
+                            <div class="tab-pane" id="about">
+                                <h4 class="info-text"> Dados Pessoais</h4>
+                              <div class="row">
+                                  
+                                  <div class="col-sm-8 offset-2">
+                                        <div class="form-group">
+                                            <input class="form-control" id="name"  type="text" placeholder="Nome" name="nome">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" id="phone" type="tel" placeholder="Telefone" name="phone">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" id="email" type="email" placeholder="E-mail" name="email">
+                                        </div>
+                                  </div>
+                                  
+                              </div>
+                            </div>
+                            <div class="tab-pane" id="account">
+                                <h4 class="info-text"> Transfer - $transfer->name </h4>
+                                <div class="row">
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+                                    <div class="col-sm-10 col-sm-offset-1">
+                                        
+                                    </div>
 
-            .content {
-                text-align: center;
-            }
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="address">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4 class="info-text"> Are you living in a nice area? </h4>
+                                    </div>
+                                    <div class="col-sm-7 col-sm-offset-1">
+                                         <div class="form-group">
+                                            <label>Street Name</label>
+                                            <input type="text" class="form-control" placeholder="5h Avenue">
+                                          </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                         <div class="form-group">
+                                            <label>Street Number</label>
+                                            <input type="text" class="form-control" placeholder="242">
+                                          </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1">
+                                         <div class="form-group">
+                                            <label>City</label>
+                                            <input type="text" class="form-control" placeholder="New York...">
+                                          </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                         <div class="form-group">
+                                            <label>Country</label><br>
+                                             <select name="country" class="form-control">
+                                                <option value="Afghanistan"> Afghanistan </option>
+                                                <option value="Albania"> Albania </option>
+                                                <option value="Algeria"> Algeria </option>
+                                                <option value="American Samoa"> American Samoa </option>
+                                                <option value="Andorra"> Andorra </option>
+                                                <option value="Angola"> Angola </option>
+                                                <option value="Anguilla"> Anguilla </option>
+                                                <option value="Antarctica"> Antarctica </option>
+                                                <option value="...">...</option>
+                                            </select>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wizard-footer height-wizard">
+                            <div class="pull-right">
+                                <input type='button' class='btn btn-next btn-fill btn-warning btn-wd btn-sm' name='next' value='Próximo' />
+                                <input type='button' class='btn btn-finish btn-fill btn-warning btn-wd btn-sm' name='finish' value='Finalizar' />
 
-            .title {
-                font-size: 84px;
-            }
+                            </div>
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+                            <div class="pull-left">
+                                <input type='button' class='btn btn-previous btn-fill btn-default btn-wd btn-sm' name='previous' value='Anterior' />
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
+                    </form>
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
+            </div> <!-- wizard container -->
         </div>
-    </body>
-</html>
+        </div><!-- end row -->
+    </div> <!--  big container -->
+@endsection
+
+@section('script')
+
+<!--   Core JS Files   -->
+<script src="{{ asset('js/jquery-2.2.4.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/jquery.bootstrap.wizard.js') }}" type="text/javascript"></script>
+
+<!--  Plugin for the Wizard -->
+<script src="{{ asset('js/gsdk-bootstrap-wizard.js') }}"></script>
+
+<script src="{{ asset('js/jquery.validate.min.js') }}"></script>
+@endsection
