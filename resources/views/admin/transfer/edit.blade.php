@@ -31,14 +31,7 @@
                         <label for="name">Nome</label>
                         <input type="text" value="{{ $transfer->name }}" name="name" class="form-control" id="name" placeholder="Digite o nome">
                     </div>
-                    <div class="form-group">
-                        <label for="type">Tipo</label>
-                        <select id="type" class="form-control" name="type">
-                            <option @if($transfer->type == 'volta') selected="selected" @endif value="volta">Volta</option>
-                            <option @if($transfer->type == 'ida') selected="selected" @endif value="ida">Ida</option>
-                            <option @if($transfer->type == 'ida-volta') selected="selected" @endif value="ida-volta">Ida/Volta</option>
-                        </select>
-                    </div>
+                    
                     <div class="form-group">
                         <label for="route">Rota</label>
                         <input type="text" name="route" value="{{ $transfer->route }}" class="form-control" id="route" placeholder="Digite a rota">
@@ -51,6 +44,14 @@
                             <span class="input-group-addon">.00</span>
                         </div>
                     </div>
+                    <div class="form-group">
+                            <label for="route">Preço</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">R$</span>
+                                <input type="number" value="{{ $transfer->price_combo }}" class="form-control" name="price_combo">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
 
                 </div>
                 <!-- /.box-body -->

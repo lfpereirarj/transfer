@@ -15,97 +15,41 @@
 
 // Get Shit Done Kit Bootstrap Wizard Functions
 
-function defineWatch(object) {
-    Object.defineProperty(object, "watch", {
-        enumerable: false,
-        configurable: true,
-        writable: false,
-        value: function (prop, handler) {
-            var oldValue = this[prop],
-                newValue = oldValue,
-                getter = function () {
-                    return newValue;
-                },
-                setter = function (value) {
-                    if (oldValue === value) {
-                        return;
-                    }
 
-                    newValue = value;
-                    handler.call(this, prop, oldValue, value);
-
-                    return oldValue = value;
-                };
-
-            if (delete this[prop]) {
-                Object.defineProperty(this, prop, {
-                    get: getter,
-                    set: setter,
-                    enumerable: true,
-                    configurable: true
-                });
-            }
-        }
-    });
-}
-
-function defineUnwatch(object) {
-    Object.defineProperty(object, "unwatch", {
-        enumerable: false,
-        configurable: true,
-        writable: false,
-        value: function (prop) {
-            var val = this[prop];
-            delete this[prop];
-            this[prop] = val;
-        }
-    });
-}
-
-(function () {
-    'use strict';
-
-    function register(hostId, model) {
-        defineWatch(model);
-
-        var host = document.getElementById(hostId);
-
-        var inputs = document.querySelectorAll('#' + hostId + ' [my-input]');
-        inputs = [].slice.apply(inputs);
-
-        var outputs = document.querySelectorAll('#' + hostId + ' [my-output]');
-        outputs = [].slice.apply(outputs);
-
-        inputs.forEach(function (input) {
-            var modelProp = input.getAttribute('my-input');
-
-            input.addEventListener('keyup', function (e) {
-                model[modelProp] = e.target.value;
-            });
-
-            input.addEventListener('onchange', function (e) {
-                model[modelProp] = e.target.value;
-            });
-        });
-
-        outputs.forEach(function (output) {
-            var modelProp = output.getAttribute('my-output');
-
-            model.watch(modelProp, function (prop, oldValue, value) {
-                output.innerHTML = value;
-            });
-        });
-
-    }
-
-    register('tranfer-form', {});
-
-})();
-
-searchVisible = 0;
-transparent = true;
 
 $(document).ready(function(){
+
+    var getValues = function(){
+        var fields = {}
+
+        $('.form').find(`input[type="text"],
+            input[type="number"],
+            input[type="tel"],
+            input[type="email"],
+            input[type="hidden"],
+            input[type="radio"]:checked,
+            input[type="checkbox"]:checked,
+            select,
+            textarea`).each(function(i) {
+            var name = $(this).attr('name') || $(this).attr('id')
+            if(name){
+            fields[name] = $(this).val()
+            }
+        })
+
+        console.log(fields);
+        $('#confirmation span').each(function(){
+            var field = $(this).attr('class');
+            if(field == 'price_combo' || field == 'price_total'){
+                fields[field] = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(fields[field]);
+            }
+            $(this).text(fields[field]);
+        })
+    }
+
+    $('.form input', ).on('blur', function(){
+        getValues();
+    })
 
     $('#transfer-form').on('submit', function (e) {
         e.preventDefault();
@@ -187,7 +131,9 @@ $(document).ready(function(){
         	if(!$valid) {
         		$validator.focusInvalid();
         		return false;
-        	}
+            }
+            
+            getValues();
         },
 
         onInit : function(tab, navigation, index){

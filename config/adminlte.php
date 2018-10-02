@@ -108,20 +108,23 @@ return [
     */
 
     'menu' => [
-        'MAIN NAVIGATION',
+        'Menu Principal',
         [
             'text' => 'Blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'Pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'file',
-            'label'       => 4,
+            'text'        => 'Transfer',
+            'url'         => 'admin/transfers',
             'label_color' => 'success',
         ],
-        'ACCOUNT SETTINGS',
+        [
+            'text'        => 'Pedidos',
+            'url'         => 'admin/orders',
+            'label_color' => 'success',
+        ],
+        /* 'ACCOUNT SETTINGS',
         [
             'text' => 'Profile',
             'url'  => 'admin/settings',
@@ -182,7 +185,7 @@ return [
         [
             'text'       => 'Information',
             'icon_color' => 'aqua',
-        ],
+        ], */
     ],
 
     /*
