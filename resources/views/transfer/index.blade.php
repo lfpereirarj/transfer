@@ -12,7 +12,7 @@
                             @csrf
                     	<div class="wizard-header">
                         	<h3>
-                               <b>AGENDE</b> O SEU TRANSFER 
+                               Transfer <b>{{ $transfer->name }}</b>
                                <br>
                                <br>
                         	</h3>
@@ -35,13 +35,13 @@
                                   
                                   <div class="col-sm-8 offset-sm-2">
                                         <div class="form-group">
-                                            <input class="form-control" id="name" my-input="name" type="text" placeholder="Nome" name="nome">
+                                            <input class="form-control" id="name" my-input="name" type="text" placeholder="Nome" name="nome"  autocomplete="off">
                                         </div>
                                         <div class="form-group">
-                                            <input class="form-control" id="phone" type="tel" placeholder="Telefone" name="phone"  my-input="phone">
+                                            <input class="form-control" id="phone" type="tel" placeholder="Telefone" name="phone"  my-input="phone"  autocomplete="off">
                                         </div>
                                         <div class="form-group">
-                                            <input class="form-control" id="email" type="email" placeholder="E-mail" name="email"  my-input="email">
+                                            <input class="form-control" id="email" type="email" placeholder="E-mail" name="email"  my-input="email"  autocomplete="off">
                                         </div>
                                   </div>
                                   
@@ -61,7 +61,7 @@
                                                                         <i class="fi fi-date"></i>
                                                                     </div>
                                                                 </div>
-                                                                <input class="form-control" id="datepicker" type="text" placeholder="Data Transfer" name="date"  my-input="date">
+                                                                <input class="form-control" id="datepicker" type="text" placeholder="Data Transfer" name="date"  my-input="date" autocomplete="off">
                                                             </div>
                                                         </div>
                                                         <div class="col">
@@ -76,7 +76,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input class="form-control" type="text" placeholder="Paxs (Quantidade de pessoas)" name="quantity" id="quantity" my-input="quantity">
+                                                    <input class="form-control" type="text" placeholder="Paxs (Quantidade de pessoas)" name="quantity" id="quantity" my-input="quantity"  autocomplete="off">
                                                 </div>
                                                 @if($transfer->departure)
                                                 <div class="form-group">
@@ -103,7 +103,7 @@
                                                 </div>
                                                 @endif
                                                 <div class="form-group">
-                                                    <input class="form-control" type="text" placeholder="Cidade e País de origem" name="city_country"  my-input="city_country">
+                                                    <input class="form-control" type="text" placeholder="Cidade e País de origem" name="city_country"  my-input="city_country"  autocomplete="off">
                                                 </div>
                                                 <div class="form-group">
                                                     <select class="custom-select" name="price_combo" id="package">
@@ -117,7 +117,7 @@
                                                         
                                                     </select>
                                                 </div>
-                                                <input type="hidden" name="price_total" id="price_total" my-input="price_total">
+                                                <input type="hidden" name="price_total" id="price_total" my-input="price_total" >
                                     </div>
 
                                 </div>
@@ -126,22 +126,22 @@
                                     <h4 class="info-text">Confirmação </h4>
                                     <div class="row">
                                         
-                                        <div class="col-sm-7 col-sm-offset-sm-1">
-                                            <p>Nome: <span my-output="name"></span></p>
-                                            <p>Telefone: <span my-output="phone"></span></p>
-                                            <p>E-mail: <span my-output="email"></span></p>
+                                        <div class="col-sm-7 offset-sm-2">
+                                            <p>Nome: <span class="nome"></span></p>
+                                            <p>Telefone: <span class="phone"></span></p>
+                                            <p>E-mail: <span class="email"></span></p>
                                             <p>Transfer: {{ $transfer->name }}</p>
-                                            <p>Data: <span my-output="date"></span></p>
-                                            <p>Horário: <span my-output="hour"></span></p>
-                                            <p>Quantidade: <span my-output="quantity"></span></p>
+                                            <p>Data: <span class="date"></span></p>
+                                            <p>Horário: <span class="hour"></span></p>
+                                            <p>Quantidade: <span class="quantity"></span></p>
                                             @if($transfer->departure)
-                                            <p>Embarque: <span my-output="departure"></span></p>
+                                            <p>Embarque: <span class="departure"></span></p>
                                             @endif
                                             @if($transfer->destination)
-                                            <p>Destino: <span my-output="destination"></span></p>
+                                            <p>Destino: <span class="destination"></span></p>
                                             @endif
-                                            <p>Pacote: <span my-output="package"></span></p>
-                                            <p>Preço Total: <span my-output="price_total"></span></p>
+                                            <p>Pacote: <span class="price_combo"></span></p>
+                                            <p>Preço Total: <span class="price_total"></span></p>
 
                                             <label for="confirmar" class="btn btn-primary">Confirmar</button>
                                             <input type="checkbox" style="display: none;" name="confirmar" id="confirmar">

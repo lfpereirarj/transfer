@@ -13,7 +13,7 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  */
  
-a {
+ a {
   color: #2CA8FF;
 }
 
@@ -54,7 +54,7 @@ input[type="button"]:focus {
 }
 
 .wizard-container {
-  padding-top: 100px;
+  padding-top: 30px;
   z-index: 3;
 }
 
@@ -975,4 +975,121 @@ label small {
   .btn-wd {
     min-width: 140px;
   }
+}
+
+
+.menu {
+    list-style: none;
+    padding: 0;
+}
+#colophon .widget ul li {
+	border-bottom: 1px solid #444444;
+}
+
+#colophon .widget ul li {
+    line-height: 1.5;
+    padding: 5px 0;
+    font-size: 13px;
+}
+
+.tg-one-fourth {
+    float: left;
+    width: 23.1527094%;
+    margin: 0 2.46305419% 0 0;
+    padding: 0px 0px 30px;
+}
+.tg-one-fourth-last {
+    margin: 0px;
+}
+#colophon .widget-title {
+    font-size: 22px;
+    line-height: 32px;
+}
+
+
+.widget-title span {
+    border-bottom: 2px solid #d74a1c;
+    padding-bottom: 5px;
+}
+
+.narrow-978 .inner-wrap {
+    max-width: 1000px;
+}
+
+.inner-wrap {
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+
+/* =FOOTER WIDGET AREA 
+----------------------------------------------- */
+.footer-widgets-wrapper {
+	background-color: #333333;
+	border-top: 1px solid #EAEAEA;
+}
+.footer-widgets-area {
+	padding-top: 30px;
+	padding-bottom: 10px;
+	color: #999999;
+}
+.footer-widgets-area .tg-one-fourth .widget-title {
+	text-align: left;
+}
+.footer-widgets-area h3.widget-title {
+	color: #D5D5D5;
+}
+.footer-widgets-area .tg-one-fourth p {
+	text-align: left;
+	color: #999999;
+}
+.footer-widgets-area a { 
+	color: #D5D5D5 !important;
+}
+.footer-widgets-area a:hover { 
+	color: #d74a1c !important;
+}
+#colophon .widget {
+	padding-bottom: 25px;
+}
+#colophon .widget-title {
+	font-size: 22px;
+	margin-bottom:  10px;
+}
+#colophon, #colophon p {
+	font-size: 14px;
+	line-height: 18px;
+	margin: 40px 0 0;
+}
+
+/* =FOOTER SOCKET AREA 
+----------------------------------------------- */
+.footer-socket-wrapper {
+	padding: 10px 0px;
+	background-color: #F8F8F8;
+	border-top: 1px solid #EAEAEA;
+}
+.footer-socket-area {
+	width: 100%;
+}
+.footer-socket-wrapper .copyright {
+	color: #666666;
+	max-width: 50%;
+	float: left;
+	font-size: 12px;
+}
+.footer-socket-wrapper .copyright a {
+	color: #666666;
+}
+.footer-socket-wrapper .copyright a:hover {
+	color: #0FBE7C;
+}
+.footer-socket-wrapper .small-menu {
+	float: right;
+}
+.footer-socket-wrapper .small-menu a {
+	padding-top: 0;
+}
+.footer-socket-wrapper .small-menu ul li ul {
+	top: 21px;
 }
