@@ -17,7 +17,9 @@ class TransferController extends Controller
     {
         //
 
-        return view('admin.transfer.index');
+        $tranfers = Transfer::All();
+
+        return view('admin.transfer.index')->with('transfers', $tranfers);
     }
 
     /**
