@@ -8,7 +8,7 @@
             <div class="wizard-container">
 
                 <div class="card wizard-card" data-color="orange" id="wizardProfile">
-                    <form method="post" class="form" id="tranfer-form" action="{{ route('orders.store')}}">
+                    <form method="post" class="form" id="transfer-form" action="/orders">
                             @csrf
                     	<div class="wizard-header">
                         	<h3>
@@ -143,7 +143,7 @@
                                             <p>Pacote: <span class="price_combo"></span></p>
                                             <p>Preço Total: <span class="price_total"></span></p>
 
-                                            <label for="confirmar" class="btn btn-primary">Confirmar</button>
+                                            <button for="confirmar" class="btn btn-primary">Confirmar</button>
                                             <input type="checkbox" style="display: none;" name="confirmar" id="confirmar">
                                         </div>
                                        
@@ -151,7 +151,12 @@
                                 </div>
                             <div class="tab-pane" id="payment">
                                     <h4 class="info-text">Pagamento </h4>
-                                    <div id="paypal-button-container"></div>
+                                    <div class="row">
+                                        
+                                        <div class="col-sm-7 offset-sm-2">
+                                            <div id="paypal-button-container"></div>
+                                        </div>
+                                    </div>            
                             </div>
                         </div>
                         <div class="wizard-footer height-wizard">
@@ -173,6 +178,13 @@
         </div>
         </div><!-- end row -->
     </div> <!--  big container -->
+
+    <form method="post" id="form-update" style="display: none" action="/orders">
+        @csrf
+        @method('PATCH')
+        <input type="hidden" name="id">
+        
+    </form>
 @endsection
 
 @section('script')
@@ -223,7 +235,33 @@
 
         onAuthorize: function(data, actions) {
             return actions.payment.execute().then(function() {
-                window.alert('Payment Complete!');
+
+                
+                    var fields = {}
+            
+                    $('#update-form').find(`input[type="text"],
+                        input[type="number"],
+                        input[type="tel"],
+                        input[type="email"],
+                        input[type="hidden"],
+                        input[type="radio"]:checked,
+                        input[type="checkbox"]:checked,
+                        select,
+                        textarea`).each(function(i) {
+                        var name = $(this).attr('name') || $(this).attr('id')
+                        if(name){
+                        fields[name] = $(this).val()
+                        }
+                    })
+                    
+                    $.ajax({
+                        type: "PUT",
+                        url: $('#update-form').attr('action'),
+                        data: fields,
+                        success: function( msg ) {
+                            window.location = 'http://transferilhagrande.com.br'
+                        }
+                    });
             });
         }
 

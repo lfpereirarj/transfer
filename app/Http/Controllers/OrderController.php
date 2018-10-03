@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Exports\OrdersExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Order;
+
 
 class OrderController extends Controller
 {
@@ -34,11 +38,54 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $response = array(
-            'status' => 'success',
-            'msg' => 'Setting created successfully',
-        );
-        return \Response::json($response);
+        
+
+
+
+        $order = new Order;
+
+        $order->name = $request->nome;
+        $order->email = $request->email;
+        $order->phone = $request->phone;
+        $order->date = date( 'Y-m-d', strtotime($request->date));
+        $order->hour = $request->hour;
+        $order->quantity = $request->quantity;
+        $order->city_country = $request->city_country;
+        $order->price_unit = $request->price_combo;
+        $order->price_total = $request->price_total;
+        if(! $request->departure) {
+            $order->departure = '-';
+        }else {
+            $order->departure = $request->departure;
+        }
+
+        if(! $request->destination) {
+            $order->destination = '-';
+        }else {
+            $order->destination = $request->destination;
+        }
+        
+        $order->payment_method = 'Pay Pal';
+        $order->status = 'Aguardando Pagamento';
+        //dd($order);
+
+        $order->save();
+
+        if($order->save()){
+            $response = array(
+                'status' => 'success',
+                'msg' => 'Pedido Criado com sucesso',
+                'order_id' => $order->id
+            );
+            return \Response::json($response, 200);
+        }else {
+            $response = array(
+                'status' => 'error',
+                'msg' => 'Não foi possivel criar o pedido'
+            );
+            return \Response::json($response, 500);
+        }
+
     }
 
     /**
@@ -72,7 +119,9 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::find($id);
+        $order->status = $request->status;
+        return Redirect::to('orders/success');
     }
 
     /**
@@ -84,5 +133,11 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function export() 
+    {
+        return Excel::download(new OrdersExport, 'orders.xlsx');
     }
 }
