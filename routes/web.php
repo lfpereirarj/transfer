@@ -18,12 +18,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/orders/export', 'OrderController@export')->name('order-export');
 Route::resource('transfers', 'TransferController');
 Route::resource('orders', 'OrderController');
 
+
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('transfers', 'Admin\TransferController');
+    Route::resource('orders', 'Admin\OrderController');
     Route::resource('schedules', 'Admin\ScheduleController');
+   
 });
 
