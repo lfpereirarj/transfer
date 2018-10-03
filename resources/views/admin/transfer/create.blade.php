@@ -30,14 +30,7 @@
                         <label for="name">Nome</label>
                         <input type="text" name="name" class="form-control" id="name" placeholder="Digite o nome">
                     </div>
-                    <div class="form-group">
-                        <label for="type">Tipo</label>
-                        <select id="type" class="form-control" name="type">
-                            <option value="ida">Ida</option>
-                            <option value="volta">Volta</option>
-                            <option value="ida-volta">Ida/Volta</option>
-                        </select>
-                    </div>
+                    
                     <div class="form-group">
                         <label for="route">Rota</label>
                         <input type="text" name="route" class="form-control" id="route" placeholder="Digite a rota">
@@ -50,7 +43,7 @@
                             <span class="input-group-addon">.00</span>
                         </div>
                     </div>
-
+                    <input type="hidden" id="type" class="form-control" name="type" value="ida">
                 </div>
                 <!-- /.box-body -->
 

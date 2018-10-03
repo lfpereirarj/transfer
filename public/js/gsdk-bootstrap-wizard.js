@@ -53,13 +53,27 @@ $(document).ready(function(){
 
     $('#transfer-form').on('submit', function (e) {
         e.preventDefault();
-        var name = $('#name').val();
-        var email = $('#email').val();
-        var _token = $('input[name="_token"]').val();
+        var fields = {}
+
+        $(this).find(`input[type="text"],
+            input[type="number"],
+            input[type="tel"],
+            input[type="email"],
+            input[type="hidden"],
+            input[type="radio"]:checked,
+            input[type="checkbox"]:checked,
+            select,
+            textarea`).each(function(i) {
+            var name = $(this).attr('name') || $(this).attr('id')
+            if(name){
+            fields[name] = $(this).val()
+            }
+        })
+        
         $.ajax({
             type: "POST",
             url: $('#transfer-form').attr('action'),
-            data: {name: name, email: email, _token: _token},
+            data: fields,
             success: function( msg ) {
                 console.log(msg);
             }

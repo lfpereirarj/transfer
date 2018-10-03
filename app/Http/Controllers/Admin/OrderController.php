@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Exports\OrdersExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Order;
 
 class OrderController extends Controller
 {
@@ -14,7 +17,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::All();
+
+        return view('admin.orders.index')->with('orders', $orders);
     }
 
     /**
@@ -46,7 +51,9 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $orders = Order::All();
+
+        return view('admin.orders.index')->with('orders', $orders);
     }
 
     /**
@@ -81,5 +88,10 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function export() 
+    {
+        return Excel::download(new OrdersExport, 'orders.xlsx');
     }
 }
