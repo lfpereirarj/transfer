@@ -56,7 +56,10 @@ class TransferController extends Controller
 
         $transfer->name = $request->name;
         $transfer->type = $request->type;
-        $transfer->route = $request->route;
+        $transfer->hour = $request->hour;
+        $transfer->hour_back = $request->hour_back;
+        $transfer->destination = $request->destination;
+        $transfer->departure = $request->departure;
         $transfer->price = $request->price;
 
         $transfer->save();
@@ -105,8 +108,12 @@ class TransferController extends Controller
     {
         $transfer->name = $request->name;
         $transfer->type = $request->type;
-        $transfer->route = $request->route;
+        $transfer->hour = $request->hour;
+        $transfer->hour_back = $request->hour_back;
+        $transfer->destination = $request->destination;
+        $transfer->departure = $request->departure;
         $transfer->price = $request->price;
+
 
 
         $transfer->save();

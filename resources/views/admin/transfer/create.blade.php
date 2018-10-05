@@ -32,10 +32,6 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="route">Rota</label>
-                        <input type="text" name="route" class="form-control" id="route" placeholder="Digite a rota">
-                    </div>
-                    <div class="form-group">
                         <label for="route">Preço</label>
                         <div class="input-group">
                             <span class="input-group-addon">R$</span>
@@ -43,7 +39,32 @@
                             <span class="input-group-addon">.00</span>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="route">Preço Ida e Volta</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <input type="number" class="form-control" name="price_combo">
+                            <span class="input-group-addon">.00</span>
+                        </div>
+                    </div>
                     <input type="hidden" id="type" class="form-control" name="type" value="ida">
+                    <div class="form-group">
+                            <label for="name">Destinos</label>
+                            <input type="text" name="destination" class="form-control" id="destination">
+                        </div>
+                    <div class="form-group">
+                            <label for="name">Embarque</label>
+                            <input type="text" name="departure" class="form-control" id="departure">
+                        </div>
+                        <div class="form-group">
+                                <label for="name">Horários Ida</label>
+                                <input type="text" name="hour" class="form-control" id="hour">
+                            </div> 
+                            <div class="form-group">
+                                    <label for="name">Horários Volta</label>
+                                    <input type="text" name="hour_back" class="form-control" id="hour_back">
+                                </div>                 
                 </div>
                 <!-- /.box-body -->
 

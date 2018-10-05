@@ -1093,3 +1093,7 @@ label small {
 .footer-socket-wrapper .small-menu ul li ul {
 	top: 21px;
 }
+
+.form-back {
+  display: none;
+}
