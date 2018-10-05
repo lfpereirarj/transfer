@@ -19,6 +19,10 @@
 
 $(document).ready(function(){
 
+    $('.disabled').on('click', function(e){
+        e.preventDefault();
+    })
+
     var getValues = function(){
         var fields = {}
 
@@ -130,6 +134,14 @@ $(document).ready(function(){
             }
         }
     });
+
+    $('#package').on('change', function(){
+        if($('option:selected', this).text() == 'Ida e Volta'){
+            $('.form-back').show();
+        }else {
+            $('.form-back').hide();
+        }
+    })
     
     
       
@@ -141,6 +153,15 @@ $(document).ready(function(){
         'previousSelector': '.btn-previous',
 
         onNext: function(tab, navigation, index) {
+
+            if(index == 2){
+                $('.btn-next').val('Confirmar');
+            }else {
+                
+            }
+
+            
+           
         	var $valid = $('.wizard-card form').valid();
         	if(!$valid) {
         		$validator.focusInvalid();
@@ -182,19 +203,29 @@ $(document).ready(function(){
             }
         },
 
-        onTabShow: function(tab, navigation, index) {
+        onTabShow: function(tab, navigation, index, currentIndex) {
+            console.log(index);
             var $total = navigation.find('li').length;
             var $current = index+1;
+
+           
 
             var $wizard = navigation.closest('.wizard-card');
 
             // If it's the last tab then hide the last button and show the finish instead
             if($current >= $total) {
+                $('#transfer-form').submit();
                 $($wizard).find('.btn-next').hide();
-                $($wizard).find('.btn-finish').show();
+                $($wizard).find('.btn-finish').hide();
+                $($wizard).find('.btn-previous').hide();
+                $('.nav-pills a').addClass('disabled');
+                $('.moving-tab').hide();
             } else {
                 $($wizard).find('.btn-next').show();
+                $($wizard).find('.btn-previous').show();
                 $($wizard).find('.btn-finish').hide();
+                $('.nav-pills a').removeClass('disabled');
+                $('.moving-tab').show();
             }
 
             button_text = navigation.find('li:nth-child(' + $current + ') a').html();
