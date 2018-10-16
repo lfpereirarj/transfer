@@ -53,6 +53,7 @@ class OrderController extends Controller
         $order->city_country = $request->city_country;
         $order->price_unit = $request->price_combo;
         $order->price_total = $request->price_total;
+        $order->transfer = $request->transfer;
         if(! $request->departure) {
             $order->departure = '-';
         }else {

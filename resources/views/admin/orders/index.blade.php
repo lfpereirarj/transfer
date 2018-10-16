@@ -6,7 +6,22 @@
         <div class="box-header">
           <h3 class="box-title">Transfers</h3><br><br>
 
-            <a href="/orders/export" class="btn btn-success">Baixar Planilha</a>
+          <div class="btn-group open">
+            <button type="button" class="btn btn-success">Baixar Planilha</button>
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+              <span class="caret"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="/orders/export/">Todos</a></li>
+              <li><a href="/orders/export/1">Ilha Grande x Búzios</a></li>
+              <li><a href="/orders/export/2">Rio de Janeiro x Ilha Grande</a></li>
+              <li><a href="/orders/export/3">Ilha Grande x Rio de Janeiro</a></li>
+              <li><a href="/orders/export/4">Rio de Janeiro x Angra dos Reis</a></li>
+              <li><a href="/orders/export/5">Angra dos Reis x Rio de Janeiro</a></li>
+              <li><a href="/orders/export/6">Rio de Janeiro x Búzios</a></li>
+            </ul>
+          </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
