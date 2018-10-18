@@ -18,9 +18,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/orders/export/{name}', 'OrderController@export')->name('order-export');
+Route::get('/orders/export/{transfer}', 'OrderController@export')->name('order-export');
 Route::resource('transfers', 'TransferController');
 Route::resource('orders', 'OrderController');
+Route::post('/send', 'EmailController@send');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {

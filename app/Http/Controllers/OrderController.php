@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exports\OrdersExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactEmail;
 use App\Order;
 
 
@@ -54,6 +56,7 @@ class OrderController extends Controller
         $order->price_unit = $request->price_combo;
         $order->price_total = $request->price_total;
         $order->transfer = $request->transfer;
+        $order->transfer_id = $request->transfer_id;
         if(! $request->departure) {
             $order->departure = '-';
         }else {
@@ -73,6 +76,7 @@ class OrderController extends Controller
         $order->save();
 
         if($order->save()){
+            Mail::to($request->email)->send(new ContactEmail($request));
             $response = array(
                 'status' => 'success',
                 'msg' => 'Pedido Criado com sucesso',
@@ -139,6 +143,7 @@ class OrderController extends Controller
 
     public function export() 
     {
-        return Excel::download(new OrdersExport, 'orders.xlsx');
+        //dd(request()->transfer);
+        return (new OrdersExport(request()->transfer))->download('orders.xlsx');
     }
 }

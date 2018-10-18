@@ -3,16 +3,28 @@
 namespace App\Exports;
 
 use App\Order;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class OrdersExport implements FromCollection
+
+class OrdersExport implements FromQuery, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    use Exportable;
+
+    public function __construct(int $transfer_id)
     {
-        return Order::all();
+        $this->transfer_id = $transfer_id;
+    }
+
+    public function query()
+    {
+        $orders = Order::query();
+        
+        return $orders->where('transfer_id', $this->transfer_id);
     }
 
     public function headings(): array
