@@ -53,7 +53,8 @@
                             <div class="tab-pane" id="account">
                                 <h4 class="info-text"> Transfer - {{ $transfer->name }} </h4>
                                 <div class="row">
-
+                                    <input type="hidden" name="transfer" value="{{$transfer->name}}">
+                                    <input type="hidden" name="transfer_id" value="{{$transfer->id}}">
                                     <div class="col-sm-8 offset-sm-2">
                                         <div class="form-group">
                                             <select class="custom-select" name="price_combo" id="package">
@@ -108,6 +109,7 @@
                                                                 autocomplete="off">
                                                         </div>
                                                     </div>
+                                                    @if($transfer->hour_back)
                                                     <div class="col">
                                                         <select class="custom-select" name="hour_back" my-input="hour">
                                                             <option selected="">Horário do transfer</option>
@@ -117,6 +119,7 @@
                                                         </select>
     
                                                     </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         <div class="form-group">

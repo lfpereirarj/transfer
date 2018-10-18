@@ -92,6 +92,8 @@ class OrderController extends Controller
 
     public function export() 
     {
-        return Excel::download(new OrdersExport, 'orders.xlsx');
+        
+        dd(request()->transfer);
+        return (new OrdersExport($request->transfer))->download('orders.xlsx');
     }
 }
