@@ -71,12 +71,15 @@ class OrderController extends Controller
         
         $order->payment_method = 'Pay Pal';
         $order->status = 'Aguardando Pagamento';
+        $request->status = $order->status;
         //dd($order);
 
         $order->save();
 
+        Mail::to($request->email)->send(new ContactEmail($request));
+
         if($order->save()){
-            Mail::to($request->email)->send(new ContactEmail($request));
+            
             $response = array(
                 'status' => 'success',
                 'msg' => 'Pedido Criado com sucesso',

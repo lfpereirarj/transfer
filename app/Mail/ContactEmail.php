@@ -30,8 +30,8 @@ class ContactEmail extends Mailable
      */
     public function build()
     {
-        return $this->from($this->data->email, $this->data->name)
-                    ->subject("Pedido Solicitado")
+        return $this->from($this->data->email, $this->data->nome)
+                    ->subject("Pedido Solicitado - ". $this->data->status)
                     ->view('mail.contact');
     }
 }

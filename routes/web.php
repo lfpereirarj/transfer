@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/orders/export/{transfer}', 'OrderController@export')->name('order-export');
 Route::resource('transfers', 'TransferController');
 Route::resource('orders', 'OrderController');
-Route::post('/send', 'EmailController@send');
+Route::get('/send/{title}/{content}', 'EmailController@send');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {

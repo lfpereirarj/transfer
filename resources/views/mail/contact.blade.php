@@ -755,7 +755,7 @@
                   <div style="Margin-left: 20px;Margin-right: 20px;">
                     <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
                       <h1 style="Margin-top: 0;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #565656;font-size: 30px;line-height: 38px;text-align: center;">
-                        <strong>Contato</strong>
+                        <strong>{{ $data->status }}</strong>
                       </h1>
                       <p style="Margin-top: 20px;Margin-bottom: 0;">Informações do contato:
                         <br />
@@ -764,7 +764,7 @@
                         <br />
                         <strong>Status: </strong> : {{ $data->status }}
                         <br />
-                        <strong>Nome:</strong> {{ $data->name }}
+                        <strong>Nome:</strong> {{ $data->nome }}
                         <br />
                         <strong>E-mail:</strong> {{ $data->email }}
                         <br />

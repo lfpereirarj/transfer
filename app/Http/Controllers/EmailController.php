@@ -9,16 +9,16 @@ class EmailController extends Controller
 {
     //
 
-    public function send(Request $request) {
-        $title = $request->input('title');
-        $content = $request->input('content');
+    public function send() {
+        $title = request()->title;
+        $content = request()->content;
 
-        Mail::send('emails.send', ['title' => $title, 'content' => $content], function ($message)
+        Mail::send('mail.send', ['title' => $title, 'content' => $content], function ($message)
         {
 
-            $message->from('me@gmail.com', 'Christian Nwamba');
+            $message->from('pedido@transferilhagrande.com', 'Christian Nwamba');
 
-            $message->to('chrisn@scotch.io');
+            $message->to('lf.pereirarj@gmail.com');
 
         });
 
