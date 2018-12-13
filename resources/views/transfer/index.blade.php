@@ -127,7 +127,7 @@
                                                 name="quantity" id="quantity" my-input="quantity" autocomplete="off">
                                         </div>
                                         @if($transfer->departure)
-                                        <div class="form-group">
+                                        <div class="form-group form-group--destino">
                                             <div class="row">
                                                 <div class="col">
                                                     <select class="custom-select" name="departure" my-input="departure">

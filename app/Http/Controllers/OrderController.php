@@ -52,6 +52,7 @@ class OrderController extends Controller
         $order->date = date( 'Y-m-d', strtotime($request->date));
         $order->hour = $request->hour;
         $order->quantity = $request->quantity;
+        $order->information = $request->information;
         $order->city_country = $request->city_country;
         $order->price_unit = $request->price_combo;
         $order->price_total = $request->price_total;

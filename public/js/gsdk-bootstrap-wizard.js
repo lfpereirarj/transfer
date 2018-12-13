@@ -17,13 +17,13 @@
 
 
 
-$(document).ready(function(){
+$(document).ready(function () {
 
-    $('.disabled').on('click', function(e){
+    $('.disabled').on('click', function (e) {
         e.preventDefault();
     })
 
-    var getValues = function(){
+    var getValues = function () {
         var fields = {}
 
         $('.form').find(`input[type="text"],
@@ -34,24 +34,27 @@ $(document).ready(function(){
             input[type="radio"]:checked,
             input[type="checkbox"]:checked,
             select,
-            textarea`).each(function(i) {
+            textarea`).each(function (i) {
             var name = $(this).attr('name') || $(this).attr('id')
-            if(name){
-            fields[name] = $(this).val()
+            if (name) {
+                fields[name] = $(this).val()
             }
         })
 
         console.log(fields);
-        $('#confirmation span').each(function(){
+        $('#confirmation span').each(function () {
             var field = $(this).attr('class');
-            if(field == 'price_combo' || field == 'price_total'){
-                fields[field] = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(fields[field]);
+            if (field == 'price_combo' || field == 'price_total') {
+                fields[field] = new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                }).format(fields[field]);
             }
             $(this).text(fields[field]);
         })
     }
 
-    $('.form input', ).on('blur', function(){
+    $('.form input', ).on('blur', function () {
         getValues();
     })
 
@@ -67,18 +70,18 @@ $(document).ready(function(){
             input[type="radio"]:checked,
             input[type="checkbox"]:checked,
             select,
-            textarea`).each(function(i) {
+            textarea`).each(function (i) {
             var name = $(this).attr('name') || $(this).attr('id')
-            if(name){
-            fields[name] = $(this).val()
+            if (name) {
+                fields[name] = $(this).val()
             }
         })
-        
+
         $.ajax({
             type: "POST",
             url: $('#transfer-form').attr('action'),
             data: fields,
-            success: function( msg ) {
+            success: function (msg) {
                 console.log(msg);
             }
         });
@@ -89,34 +92,34 @@ $(document).ready(function(){
 
     // Code for the Validator
     var $validator = $('.wizard-card form').validate({
-		  rules: {
-		    nome: {
-		      required: true,
-		      minlength: 3
-		    },
-		    phone: {
-		      required: true,
-		      minlength: 3
-		    },
-		    email: {
-		      required: true,
-		      minlength: 3,
+        rules: {
+            nome: {
+                required: true,
+                minlength: 3
             },
-		    quantity: {
-		      required: true
+            phone: {
+                required: true,
+                minlength: 3
             },
-		    city_country: {
-		      required: true
+            email: {
+                required: true,
+                minlength: 3,
+            },
+            quantity: {
+                required: true
+            },
+            city_country: {
+                required: true
             },
             price_combo: {
                 required: true,
-                min: 2 
+                min: 2
             },
             confirmar: {
                 required: true
             }
         },
-        messages:{
+        messages: {
             nome: {
                 required: 'Digite o seu nome'
             },
@@ -135,85 +138,103 @@ $(document).ready(function(){
         }
     });
 
-    $('#package').on('change', function(){
-        if($('option:selected', this).text() == 'Ida e Volta'){
+    $('#package').on('change', function () {
+        if ($('option:selected', this).text() == 'Ida e Volta') {
             $('.form-back').show();
-        }else {
+        } else {
             $('.form-back').hide();
         }
     })
-    
-    
-      
+
+    $('select[name="departure"]').on('change', function () {
+        var value = $(this).val();
+        $('.form-group--information').remove();
+
+        if (value == "Aeroportos") {
+            var html = `<div class="form-group form-group--information">
+                            <input class="form-control" type="text" placeholder="Dados do Vôo" name="information" my-input="information" autocomplete="off">
+                        </div>`
+
+        } else {
+            var html = `<div class="form-group form-group--information">
+                            <textarea class="form-control" type="text" placeholder="Endereço" name="information" my-input="information" autocomplete="off"></textarea>
+                        </div>`
+        }
+
+        $(html).insertAfter('.form-group--destino')
+    })
+
+
+
 
     // Wizard Initialization
-  	$('.wizard-card').bootstrapWizard({
+    $('.wizard-card').bootstrapWizard({
         'tabClass': 'nav nav-pills',
         'nextSelector': '.btn-next',
         'previousSelector': '.btn-previous',
 
-        onNext: function(tab, navigation, index) {
+        onNext: function (tab, navigation, index) {
 
-            if(index == 2){
+            if (index == 2) {
                 $('.btn-next').val('Confirmar');
-            }else {
-                
+            } else {
+
             }
 
-            
-           
-        	var $valid = $('.wizard-card form').valid();
-        	if(!$valid) {
-        		$validator.focusInvalid();
-        		return false;
+
+
+            var $valid = $('.wizard-card form').valid();
+            if (!$valid) {
+                $validator.focusInvalid();
+                return false;
             }
-            
+
             getValues();
         },
 
-        onInit : function(tab, navigation, index){
+        onInit: function (tab, navigation, index) {
 
-          //check number of tabs and fill the entire row
-          var $total = navigation.find('li').length;
-          $width = 100/$total;
-          var $wizard = navigation.closest('.wizard-card');
+            //check number of tabs and fill the entire row
+            var $total = navigation.find('li').length;
+            $width = 100 / $total;
+            var $wizard = navigation.closest('.wizard-card');
 
-          $display_width = $(document).width();
+            $display_width = $(document).width();
 
-          if($display_width < 600 && $total > 3){
-              $width = 50;
-          }
+            if ($display_width < 600 && $total > 3) {
+                $width = 50;
+            }
 
-           navigation.find('li').css('width',$width + '%');
-           $first_li = navigation.find('li:first-child a').html();
-           $moving_div = $('<div class="moving-tab">' + $first_li + '</div>');
-           $('.wizard-card .wizard-navigation').append($moving_div);
-           refreshAnimation($wizard, index);
-           $('.moving-tab').css('transition','transform 0s');
-       },
+            navigation.find('li').css('width', $width + '%');
+            $first_li = navigation.find('li:first-child a').html();
+            $moving_div = $('<div class="moving-tab">' + $first_li + '</div>');
+            $('.wizard-card .wizard-navigation').append($moving_div);
+            refreshAnimation($wizard, index);
+            $('.moving-tab').css('transition', 'transform 0s');
+        },
 
-        onTabClick : function(tab, navigation, index){
+        onTabClick: function (tab, navigation, index) {
 
             var $valid = $('.wizard-card form').valid();
 
-            if(!$valid){
+            if (!$valid) {
                 return false;
             } else {
                 return true;
             }
         },
 
-        onTabShow: function(tab, navigation, index, currentIndex) {
+        onTabShow: function (tab, navigation, index, currentIndex) {
             console.log(index);
             var $total = navigation.find('li').length;
-            var $current = index+1;
+            var $current = index + 1;
 
-           
+
 
             var $wizard = navigation.closest('.wizard-card');
 
             // If it's the last tab then hide the last button and show the finish instead
-            if($current >= $total) {
+            if ($current >= $total) {
                 $('#transfer-form').submit();
                 $($wizard).find('.btn-next').hide();
                 $($wizard).find('.btn-finish').hide();
@@ -230,50 +251,50 @@ $(document).ready(function(){
 
             button_text = navigation.find('li:nth-child(' + $current + ') a').html();
 
-            setTimeout(function(){
+            setTimeout(function () {
                 $('.moving-tab').text(button_text);
             }, 150);
 
             var checkbox = $('.footer-checkbox');
 
-            if( !index == 0 ){
+            if (!index == 0) {
                 $(checkbox).css({
-                    'opacity':'0',
-                    'visibility':'hidden',
-                    'position':'absolute'
+                    'opacity': '0',
+                    'visibility': 'hidden',
+                    'position': 'absolute'
                 });
             } else {
                 $(checkbox).css({
-                    'opacity':'1',
-                    'visibility':'visible'
+                    'opacity': '1',
+                    'visibility': 'visible'
                 });
             }
 
             refreshAnimation($wizard, index);
         }
-  	});
+    });
 
 
     // Prepare the preview for profile picture
-    $("#wizard-picture").change(function(){
+    $("#wizard-picture").change(function () {
         readURL(this);
     });
 
-    $('[data-toggle="wizard-radio"]').click(function(){
+    $('[data-toggle="wizard-radio"]').click(function () {
         wizard = $(this).closest('.wizard-card');
         wizard.find('[data-toggle="wizard-radio"]').removeClass('active');
         $(this).addClass('active');
         $(wizard).find('[type="radio"]').removeAttr('checked');
-        $(this).find('[type="radio"]').attr('checked','true');
+        $(this).find('[type="radio"]').attr('checked', 'true');
     });
 
-    $('[data-toggle="wizard-checkbox"]').click(function(){
-        if( $(this).hasClass('active')){
+    $('[data-toggle="wizard-checkbox"]').click(function () {
+        if ($(this).hasClass('active')) {
             $(this).removeClass('active');
             $(this).find('[type="checkbox"]').removeAttr('checked');
         } else {
             $(this).addClass('active');
-            $(this).find('[type="checkbox"]').attr('checked','true');
+            $(this).find('[type="checkbox"]').attr('checked', 'true');
         }
     });
 
@@ -283,7 +304,7 @@ $(document).ready(function(){
 
 
 
- //Function to show image before upload
+//Function to show image before upload
 
 function readURL(input) {
     if (input.files && input.files[0]) {
@@ -296,8 +317,8 @@ function readURL(input) {
     }
 }
 
-$(window).resize(function(){
-    $('.wizard-card').each(function(){
+$(window).resize(function () {
+    $('.wizard-card').each(function () {
         $wizard = $(this);
         index = $wizard.bootstrapWizard('currentIndex');
         refreshAnimation($wizard, index);
@@ -308,7 +329,7 @@ $(window).resize(function(){
     });
 });
 
-function refreshAnimation($wizard, index){
+function refreshAnimation($wizard, index) {
     total_steps = $wizard.find('li').length;
     move_distance = $wizard.width() / total_steps;
     step_width = move_distance;
@@ -316,21 +337,22 @@ function refreshAnimation($wizard, index){
 
     $wizard.find('.moving-tab').css('width', step_width);
     $('.moving-tab').css({
-        'transform':'translate3d(' + move_distance + 'px, 0, 0)',
+        'transform': 'translate3d(' + move_distance + 'px, 0, 0)',
         'transition': 'all 0.3s ease-out'
 
     });
 }
 
 function debounce(func, wait, immediate) {
-	var timeout;
-	return function() {
-		var context = this, args = arguments;
-		clearTimeout(timeout);
-		timeout = setTimeout(function() {
-			timeout = null;
-			if (!immediate) func.apply(context, args);
-		}, wait);
-		if (immediate && !timeout) func.apply(context, args);
-	};
+    var timeout;
+    return function () {
+        var context = this,
+            args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        }, wait);
+        if (immediate && !timeout) func.apply(context, args);
+    };
 };
