@@ -64,8 +64,13 @@
                 </tbody>
             </table>
         </div>
+        
         <!-- /.box-body -->
+        <div class="box-footer">
+                    <a class="btn btn-primary" href="/admin/transfers/create"> Adicionar Transfer</a>
+                </div>
       </div>
+      
       <!-- /.box -->
     </div>
   </div>
