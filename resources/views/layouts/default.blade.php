@@ -254,10 +254,7 @@
         </div>
         </footer>
     </div>
-    <script src="{{ asset('js/vendors.min.js') }}"></script>
-    <script src="{{ asset('js/datepicker.pt-BR.js') }}"></script>
-    <script src="{{ asset('js/moment.js') }}"></script>
-    <script src="{{ asset('js/main.min.js') }}"></script>
+    <script src="{{ asset('/js/react/main.js') }}"></script>
     @yield('script')
 </body>
 

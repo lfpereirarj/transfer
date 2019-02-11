@@ -1,0 +1,44 @@
+{
+  "name": "react-na-unha",
+  "version": "1.0.0",
+  "description": "React na unha",
+  "main": "src/js/app.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack --watch"
+  },
+  "keywords": [],
+  "author": "Fabio Vedovelli <vedovelli@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "axios": "^0.18.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.3",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.1.3",
+    "eslint": "^4.18.2",
+    "eslint-plugin-react": "^7.7.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "webpack": "^4.0.1",
+    "webpack-cli": "^3.2.3"
+  },
+  "dependencies": {
+    "autoprefixer": "^9.4.7",
+    "css-loader": "^2.1.0",
+    "css-mqpacker": "^7.0.0",
+    "date-fns": "^1.30.1",
+    "postcss-flexbugs-fixes": "^4.1.0",
+    "postcss-loader": "^3.0.0",
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-datepicker": "^2.1.0",
+    "react-dom": "^16.2.0",
+    "style-loader": "^0.23.1",
+    "tachyons-components": "^1.0.1"
+  }
+}
