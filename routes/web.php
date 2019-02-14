@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Transfer;
+use App\Http\Resources\TransferResource;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,4 +33,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('schedules', 'Admin\ScheduleController');
    
 });
+
+
+Route::get('/api/transfers/{id}', function ($id) {
+ return new TransferResource(Transfer::find($id));
+});
+
 

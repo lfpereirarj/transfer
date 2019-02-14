@@ -1,6 +1,13 @@
 @extends('layouts.default')
 @section('content')
 <div class="container">
+    <div class="container">
+        <div class="row">
+            <div id="app">
+
+            </div>
+        </div>    
+    </div>
     <div class="row">
         <div class="col-sm-8 offset-sm-2">
 
