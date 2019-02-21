@@ -130,6 +130,13 @@ $c-orange: #d74a1c;
         }
     }
 
+    &__select {
+        .schedule__field & {
+            width: 100%;
+            min-width: 200px;
+        }
+    }
+
     &__radio {
         input {
             display: none;
