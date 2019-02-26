@@ -9,19 +9,19 @@ import './schedule.scss';
 
 const R = require('ramda');
 
-const hour = [
+const hourOptions = [
     { value: 'manhã', label: 'Manhã' },
     { value: 'tarde', label: 'Tarde' }
 ];
 
-let departure = [
+let departureOptions = [
     { value: 'rio de janeiro', label: 'Rio de Janeiro'},
     { value: 'buzios', label: 'Búzios' },
     { value: 'ilha grande', label: 'Ilha Grande' },
     { value: 'angra dos reis', label: 'Angra dos Reis' },
 ]
 
-let destination = [
+let destinationOptions = [
     { value: 'rio de janeiro', label: 'Rio de Janeiro' },
     { value: 'buzios', label: 'Búzios' },
     { value: 'ilha grande', label: 'Ilha Grande' },
@@ -32,20 +32,36 @@ export default class Schedule extends Component {
     
 
     state = {
+        selected: 'ida e volta',
         startDate: null,
+        backDate: null,
         selectedOption: null,
         disableOption: null,
-        package: '',
         transfer: {},
         selectedDeparture: null,
         selectedDestination: null,
-        selectDestination: true
+        selectDestination: true,
+        name: '',
+        email: '',
+        phone: '',
+        package: '',
+        date: '',
+        date_back: '',
+        hour: '',
+        quantity: '',
+        departure: null,
+        destination: '',
+        city_country: '',
+        price_combo: 0,
+        price_total: 0
+
+
 
     }
 
     async componentDidMount() {
         const endpoint = window.location.pathname;
-        const transfer = await axios.get(`/api${endpoint}`);
+        const transfer = await axios.get(`/api/transfers`);
         console.log(transfer.data.data);
         const date = new Date();
         this.setState({startDate: date.now, transfer: transfer.data.data})
@@ -54,16 +70,40 @@ export default class Schedule extends Component {
 
 
     handleChange = (e) => {
+        const name = e.target.getAttribute('name');
+        if(name === 'quantity'){
+            console.log(this.state.price_total * Number(e.target.value));
+            this.setState({
+                [name]: e.target.value,
+                price_total: this.state.price_total * parseInt(e.target.value)
+            })
+        } else {
+            this.setState({
+                [name]: e.target.value
+            })
+        }
         
+
+    }
+
+    handleChangeDate = (e) => {
+
         console.log(`Option selected:`, e);
+        this.setState({ date: e})
+    }
+
+    handleChangeBackDate = (e) => {
+
+        console.log(`Option selected:`, e);
+        this.setState({ date_back: e })
     }
 
     handleChangeSelectDeparture = (selectedDeparture) => {
-        const destinationIndex = R.findIndex(R.propEq('label', selectedDeparture.label))(destination)
-        console.log(destination[destinationIndex]);
+        const destinationIndex = R.findIndex(R.propEq('label', selectedDeparture.label))(destinationOptions)
+        console.log(destinationOptions[destinationIndex]);
         
         this.setState({
-            selectedDeparture,
+            departure: selectedDeparture,
             selectDestination: false,
             disableOption: selectedDeparture.label
         });
@@ -71,11 +111,31 @@ export default class Schedule extends Component {
     }
 
     handleChangeSelectDestination = (selectedDestination) => {
+        const tranferIndex = R.findIndex(R.propEq('name', `${this.state.departure.label} x ${selectedDestination.label}`))(this.state.transfer)
+
+        if (R.isNil(this.state.transfer[tranferIndex])){
+            this.setState({
+                destination: selectedDestination
+            });
+        } else {
+
+            if(this.state.selected === 'ida ou volta'){
+                this.setState({
+                    destination: selectedDestination,
+                    price_combo: this.state.transfer[tranferIndex].price
+                });
+            } else {
+                this.setState({
+                    destination: selectedDestination,
+                    price_combo: this.state.transfer[tranferIndex].price_combo
+                });
+            }
+
+            
+        }
+
         
-        this.setState({
-            selectedDestination
-        });
-        console.log(`Option selected:`, selectedDestination);
+        console.log(`Option selected:`, this.state.transfer[tranferIndex]);
     }
 
     handleChangeSelect = (selected) => {
@@ -84,12 +144,26 @@ export default class Schedule extends Component {
         console.log(`Option selected:`, selected);
     }
 
+    handleChangeSelectHour = (selected) => {
+        this.setState({
+            hour: selected
+        });
+
+        console.log(`Option selected:`, selected);
+    }
+
     render() {
         const {
             disableOption,
             selectDestination,
-            selectedDeparture,
-            selectedDestination
+            departure,
+            destination,
+            hour,
+            date,
+            date_back,
+            quantity,
+            price_combo,
+            price_total
         } = this.state;
         
         return (
@@ -107,9 +181,9 @@ export default class Schedule extends Component {
                             <Select
                                 className="schedule__select"
                                 placeholder="Selecione a origem"
-                                value={selectedDeparture}
+                                value={departure}
                                 onChange={this.handleChangeSelectDeparture}
-                                options={departure}
+                                options={departureOptions}
                                 
                             />
                         </div>
@@ -120,16 +194,16 @@ export default class Schedule extends Component {
                             <Select
                                 className="schedule__select"
                                 placeholder="Selecione o destino"
-                                value={selectedDestination}
+                                value={destination}
                                 onChange={this.handleChangeSelectDestination}
-                                options={departure}
+                                options={departureOptions}
                                 isDisabled={selectDestination}
                                 isOptionDisabled={(option) => option.label === disableOption }
                             />
                         </div>
                         <div className="schedule__choiche">
                             <div className="schedule__radio">
-                                <input type="radio" id="ida-e-volta" name="package" onChange={this.handleChange}/>
+                                <input type="radio" id="ida-e-volta" name="package" value="ida e volta" checked={this.state.selected === 'ida e volta'} onChange={(e) => this.setState({ selected: e.target.value })}/>
                                 <label className="schedule__label" for="ida-e-volta">
                                     <span className="schedule__label-bullet"></span>
                                     ida e volta
@@ -137,7 +211,7 @@ export default class Schedule extends Component {
                                 
                             </div>
                             <div className="schedule__radio">
-                                <input type="radio" id="ida-ou-volta" onChange={this.handleChange} name="package"/>
+                                <input type="radio" id="ida-ou-volta" name="package" value="ida ou volta" checked={this.state.selected === 'ida ou volta'} onChange={(e) => this.setState({ selected: e.target.value })}/>
                                 <label className="schedule__label" for="ida-ou-volta" >
                                     <span className="schedule__label-bullet"></span>
                                 ida ou volta
@@ -152,8 +226,11 @@ export default class Schedule extends Component {
                                 <i className="fi fi-calendar"></i> Ida
                             </label>
                             <DatePicker
-                                selected={this.state.startDate}
-                                onChange={this.handleChange}
+                                placeholderText="Escolha a data de ida"
+                                minDate={new Date()}
+                                selected={date}
+                                onChange={this.handleChangeDate}
+                                dateFormat="dd/MM/yyyy"
                             />
                         </div>
                         <div className="schedule__field">
@@ -161,8 +238,11 @@ export default class Schedule extends Component {
                                 <i className="fi fi-calendar"></i> Volta
                             </label>
                             <DatePicker
-                                selected={this.state.startDate}
-                                onChange={this.handleChange}
+                                placeholderText="Escolha a data de volta"
+                                minDate={date}
+                                selected={date_back}
+                                onChange={this.handleChangeBackDate}
+                                dateFormat="dd/MM/yyyy"
                             />
                         </div>
                         <div className="schedule__field">
@@ -172,10 +252,25 @@ export default class Schedule extends Component {
                             <Select
                                 className="schedule__select"
                                 placeholder="Selecione o horário"
-                                value={selectedDestination}
-                                onChange={this.handleChangeSelect}
-                                options={hour}
+                                value={hour}
+                                onChange={this.handleChangeSelectHour}
+                                options={hourOptions}
                             />
+                        </div>
+                        
+                    </div>
+                    <div className="schedule__price">
+                        <div className="schedule__field">
+                            <label className="schedule__label">
+                                <i className="fi fi-persons"></i> Quantidade
+                            </label>
+                            <input type="text" className="schedule__input" value={quantity} name="quantity" onChange={this.handleChange}/>
+                        </div>
+                        <div className="schedule__box">
+                            <span className="schedule__price-combo">R$ {price_combo}</span>
+                        </div>
+                        <div className="schedule__box">
+                            <span className="schedule__price-total">R$ {price_total}</span>
                         </div>
                     </div>
                 </div>

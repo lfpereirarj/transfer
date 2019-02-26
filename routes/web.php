@@ -39,4 +39,8 @@ Route::get('/api/transfers/{id}', function ($id) {
  return new TransferResource(Transfer::find($id));
 });
 
+Route::get('/api/transfers', function () {
+ return new TransferResource(Transfer::All());
+});
+
 
