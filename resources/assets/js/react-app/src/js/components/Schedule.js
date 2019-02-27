@@ -53,7 +53,8 @@ export default class Schedule extends Component {
         destination: '',
         city_country: '',
         price_combo: 0,
-        price_total: 0
+        price_total: 0,
+        onBuy: false
 
 
 
@@ -72,10 +73,11 @@ export default class Schedule extends Component {
     handleChange = (e) => {
         const name = e.target.getAttribute('name');
         if(name === 'quantity'){
-            console.log(this.state.price_total * Number(e.target.value));
+            const value = parseInt(e.target.value) || 0;
+            console.log(value * this.state.price_combo);
             this.setState({
-                [name]: e.target.value,
-                price_total: this.state.price_total * parseInt(e.target.value)
+                [name]: value,
+                price_total: this.state.price_combo * value
             })
         } else {
             this.setState({
@@ -152,6 +154,8 @@ export default class Schedule extends Component {
         console.log(`Option selected:`, selected);
     }
 
+    
+
     render() {
         const {
             disableOption,
@@ -163,7 +167,11 @@ export default class Schedule extends Component {
             date_back,
             quantity,
             price_combo,
-            price_total
+            price_total,
+            name,
+            email,
+            phone,
+            onBuy
         } = this.state;
         
         return (
@@ -267,10 +275,62 @@ export default class Schedule extends Component {
                             <input type="text" className="schedule__input" value={quantity} name="quantity" onChange={this.handleChange}/>
                         </div>
                         <div className="schedule__box">
+                            <label className="schedule__label">
+                                Total
+                            </label>
                             <span className="schedule__price-combo">R$ {price_combo}</span>
                         </div>
                         <div className="schedule__box">
+                            <label className="schedule__label">
+                                Total
+                            </label>
                             <span className="schedule__price-total">R$ {price_total}</span>
+                        </div>
+                        <div className="schedule__box">
+                            <button className="btn btn--buy" onClick={(e) => this.setState({ onBuy: true })}>Comprar</button>
+                        </div>
+                    </div>
+                    <div className={onBuy ? `schedule__payment is-active` : `schedule__payment`}>
+                        <div className="schedule__profile">
+                            <div className="schedule__field">
+                                <label className="schedule__label">
+                                    <i className="fi fi-person"></i> Nome
+                                </label>
+                                <input type="text" className="schedule__input" value={name} name="name" onChange={this.handleChange} />
+                            </div>
+                            <div className="schedule__field">
+                                <label className="schedule__label">
+                                    <i className="fi fi-email"></i> Email
+                                </label>
+                                <input type="text" className="schedule__input" value={email} name="email" onChange={this.handleChange} />
+                            </div>
+                            <div className="schedule__field">
+                                <label className="schedule__label">
+                                    <i className="fi fi-phone"></i> Telefone
+                                </label>
+                                <input type="text" className="schedule__input" value={phone} name="phone" onChange={this.handleChange} />
+                            </div>
+                        </div>
+                        <div className="schedule__payment-type">
+                            
+                            <div className="schedule__choiche">
+                                <div className="schedule__radio">
+                                    <input type="radio" id="paypal" name="payment" value="paypal" checked={this.state.payment === 'paypal'} onChange={(e) => this.setState({ payment: e.target.value })} />
+                                    <label className="schedule__label" for="paypal">
+                                        <span className="schedule__label-bullet"></span>
+                                        <i className="fi fi-paypal"></i>
+                                    </label>
+
+                                </div>
+                                <div className="schedule__radio">
+                                    <input type="radio" id="boleto" name="payment" value="boleto" checked={this.state.payment === 'boleto'} onChange={(e) => this.setState({ payment: e.target.value })} />
+                                    <label className="schedule__label" for="boleto" >
+                                        <span className="schedule__label-bullet"></span>
+                                        <i className="fi fi-shopping-barcode"></i>
+                                    </label>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
